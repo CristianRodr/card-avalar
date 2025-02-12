@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tarjeta de Usuario - Fecha Encima, Editores en Línea</title>
+  <style>
+    /* ===== RESET BÁSICO ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* ===== TARJETA ===== */
+    .user-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Secciones: Izq, Centro, Der */
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      width: 100%;
+      padding: 16px 24px;
+    }
+    
+    /* ===== SECCIÓN IZQUIERDA (Avatar + Nombre + Roles) ===== */
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .info-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .user-name {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .roles-container {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .role-badge {
+      display: inline-block;
+      background-color: #E9DDFF;
+      color: #714FFF;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      border-radius: 12px;
+      max-width: fit-content;
+    }
+    
+    /* ===== SECCIÓN CENTRAL: Fecha Arriba, Stats Abajo ===== */
+    .center-section {
+      display: flex;
+      flex-direction: column; /* Fecha arriba, stats debajo */
+      align-items: center;    /* Centrar horizontalmente */
+      gap: 8px;
+    }
+    .date-info {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: normal;
+    }
+    .stats-section {
+      display: flex;
+      align-items: center;
+      gap: 0; /* Manejado con border-left */
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 16px;
+    }
+    .stat-item + .stat-item {
+      border-left: 1px solid #ddd;
+    }
+    .stat-number {
+      font-size: 1rem;
+      font-weight: bold;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: #666;
+    }
+    
+    /* ===== SECCIÓN DERECHA: Editores y Botón en la misma línea ===== */
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 24px; /* Espacio entre "Editores" y el botón */
+    }
+    
+    /* Bloque para Editores */
+    .editors-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .editors-label {
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .team-avatars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mini-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .plus-others {
+      font-size: 0.8rem;
+      background-color: #eee;
+      color: #333;
+      border-radius: 12px;
+      padding: 2px 6px;
+      display: inline-block;
+    }
+    
+    /* Botón Avalar */
+    .view-button {
+      padding: 6px 16px;
+      background-color: #fff;
+      color: #333;
+      font-size: 0.85rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .view-button:hover {
+      background-color: #f5f5f5;
+    }
+  
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="user-card">
+    <!-- SECCIÓN IZQUIERDA: Avatar, Nombre y Roles -->
+    <div class="left-section">
+      <img
+              id="avatarImg"
+              class="avatar"
+              src="https://i.pravatar.cc/48?u=933372"
+              alt="User Avatar"
+      />
+      <div class="info-block">
+        <span class="user-name" id="userName">Mary Lebowski</span>
+        <div id="rolesContainer" class="roles-container"></div>
+      </div>
+    </div>
+    
+    <!-- SECCIÓN CENTRAL: Fecha (encima) y Stats (abajo) -->
+    <div class="center-section">
+      <div class="date-info" id="incidentDate">Hecho: 11 Nov, 2018 07:46 AM</div>
+      
+      <div class="stats-section">
+        <div class="stat-item">
+          <span class="stat-number" id="projectsCount">14</span>
+          <span class="stat-label">FUNCIONARIOS</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="repliesCount">97</span>
+          <span class="stat-label">CONDUCTAS</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="postsCount">16</span>
+          <span class="stat-label">INTERVINIENTES</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="othersCount">16</span>
+          <span class="stat-label">BIENES</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- SECCIÓN DERECHA: Editores + Botón (en línea) -->
+    <div class="right-section">
+      <div class="editors-info">
+        <span class="editors-label">Editores</span>
+        <div class="team-avatars" id="editorsContainer">
+          <!-- Se inyectan dinámicamente con JS -->
+        </div>
+      </div>
+      <button class="view-button" id="viewButton">Avalar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== Datos de ejemplo (simulando respuesta del backend) =====
+  // Ajusta roles para probar: ["AVALADOR", "EDITOR"] o ["EDITOR"] ...
+  const userData = {
+    name: "Mary Lebowski",
+    date: "11 Nov, 2018 07:46 AM",
+    roles: ["AVALADOR", "EDITOR"],
+    avatarUrl: "https://i.pravatar.cc/48?u=933372",
+    
+    funcionarios: 14,
+    conductas1: 97,
+    intervinientes: 16,
+    conductas2: 16
+  };
+  
+  // Editores (para lógica de +X)
+  const editorsList = [
+    { name: "Editor1", avatar: "https://i.pravatar.cc/24?u=Editor1" },
+    { name: "Editor2", avatar: "https://i.pravatar.cc/24?u=Editor2" },
+    { name: "Editor3", avatar: "https://i.pravatar.cc/24?u=Editor3" },
+    { name: "Editor4", avatar: "https://i.pravatar.cc/24?u=Editor4" },
+    { name: "Editor5", avatar: "https://i.pravatar.cc/24?u=Editor5" },
+  ];
+  
+  /**
+   * Carga roles como badges en la parte izquierda.
+   */
+  function loadRoles(roles) {
+    const container = document.getElementById("rolesContainer");
+    container.innerHTML = "";
+    roles.forEach(role => {
+      const badge = document.createElement("span");
+      badge.className = "role-badge";
+      badge.textContent = role;
+      container.appendChild(badge);
+    });
+  }
+  
+  /**
+   * Actualiza la tarjeta con los datos del usuario.
+   */
+  function updateUserCard(data) {
+    // Nombre, fecha, avatar
+    document.getElementById("userName").textContent = data.name;
+    document.getElementById("incidentDate").textContent = "Hecho: " + data.date;
+    document.getElementById("avatarImg").src = data.avatarUrl;
+    
+    // Estadísticas
+    document.getElementById("projectsCount").textContent = data.funcionarios;
+    document.getElementById("repliesCount").textContent = data.conductas1;
+    document.getElementById("postsCount").textContent = data.intervinientes;
+    document.getElementById("othersCount").textContent = data.conductas2;
+    
+    // Roles (badges)
+    loadRoles(data.roles);
+  }
+  
+  /**
+   * Muestra los editores en la sección derecha. Si hay más de 3, se añade "+X".
+   */
+  function loadEditors(editors) {
+    const container = document.getElementById("editorsContainer");
+    container.innerHTML = "";
+    
+    const MAX_VISIBLE = 3;
+    for (let i = 0; i < editors.length && i < MAX_VISIBLE; i++) {
+      const img = document.createElement("img");
+      img.className = "mini-avatar";
+      img.src = editors[i].avatar;
+      img.alt = editors[i].name;
+      container.appendChild(img);
+    }
+    
+    if (editors.length > MAX_VISIBLE) {
+      const plusSpan = document.createElement("span");
+      plusSpan.className = "plus-others";
+      plusSpan.textContent = `+${editors.length - MAX_VISIBLE}`;
+      container.appendChild(plusSpan);
+    }
+  }
+  
+  // Inicializamos la tarjeta
+  updateUserCard(userData);
+  loadEditors(editorsList);
+  
+  // Lógica del botón Avalar según rol "AVALADOR"
+  const viewButton = document.getElementById("viewButton");
+  viewButton.addEventListener("click", () => {
+    if (userData.roles.includes("AVALADOR")) {
+      // El usuario sí puede avalar
+      viewButton.textContent = "Avalado";
+      viewButton.style.backgroundColor = "green";
+      viewButton.style.color = "#fff";
+      // Mostrar alert de éxito
+      alert("Hecho avalado con éxito.");
+    } else {
+      // Usuario sin rol AVALADOR
+      alert("No tienes el rol necesario para avalar.");
+    }
+  });
+</script>
+
+</body>
+</html>
